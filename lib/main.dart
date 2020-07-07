@@ -23,22 +23,43 @@ class MainPageState extends State<MainPage>{
           maxCrossAxisExtent: 100.0,
         mainAxisSpacing: 5.0,
         crossAxisSpacing: 5.0,
-        children: _buildGridTiles(29),
+        children: _buildGridTiles(20),
       )
     );
   }
 }
 
 List<Widget> _buildGridTiles(numberOfTiles){
-  List<Container> containers = new List<Container>.generate(numberOfTiles, (int index){
+  List<Stack> containers = new List<Stack>.generate(numberOfTiles, (int index){
     //index = 0, 1, 2, ...
     final imageName = index < 9 ?
         'images/image${index + 1}.png' : 'images/image${index + 1}.png';
-    return new Container(
-      child: new Image.asset(
-          imageName,
-        fit: BoxFit.cover,
-      ),
+    return new Stack(
+      alignment: const Alignment(1.0, 1.0),
+      children: <Widget>[
+        new Container(
+          child: new Image.asset(
+            imageName,
+            width: 150.0,
+            height: 150.0,
+            fit: BoxFit.fill,
+          ),
+        ),
+        //How to set background to Text?
+        // Let 's move Text inside a Container then set It's decoration\
+        new Container(
+          padding: const EdgeInsets.all(10.0),
+          decoration: new BoxDecoration(
+            color: new Color.fromARGB(100, 71, 150, 236)
+          ),
+          child: new Text('${index}', style: new TextStyle(
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),),
+        )
+
+      ],
     );
   });
   return containers;
